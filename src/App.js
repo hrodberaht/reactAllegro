@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Auctions from "./components/Auctions/Auctions";
 
 import "./App.css";
+import AddAuction from "./components/AddAuction/AddAuction";
 
 class App extends Component {
   state = {
@@ -27,6 +28,18 @@ class App extends Component {
     ]
   };
 
+  addAuction = (event) => {
+    console.log(event.type)
+    const copy = { ...this.state };
+    copy.auctions.push({
+      name: "Smoczki",
+      auctionId: event.target.value,
+      price: 12.5,
+      priceChange: 0.1
+    });
+    this.setState(copy);
+  };
+
   renderAuctions = () => {
     return this.state.auctions.map((auction, index) => {
       return <Auctions auction={auction} key={index} />;
@@ -34,17 +47,17 @@ class App extends Component {
   };
 
   changePrice = () => {
-    const state = { ...this.state };
+    const copy = { ...this.state };
 
-    setTimeout(()=> {
-      state.auctions[0].price = 13.5;
-      this.setState(state);
-    },2000)
-    
+    setTimeout(() => {
+      copy.auctions[0].price = 13.5;
+      this.setState(copy);
+    }, 2000);
   };
   render() {
     return (
       <div className="App">
+        <AddAuction addAuction={this.addAuction} />
         {this.renderAuctions()}
         {this.changePrice()}
       </div>
