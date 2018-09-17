@@ -28,38 +28,15 @@ class App extends Component {
     ]
   };
 
-  addAuction = (event) => {
-    console.log(event.type)
-    const copy = { ...this.state };
-    copy.auctions.push({
-      name: "Smoczki",
-      auctionId: event.target.value,
-      price: 12.5,
-      priceChange: 0.1
-    });
-    this.setState(copy);
-  };
+  renderAuctions = this.state.auctions.map((auction, index) => {
+    return <Auctions auction={auction} key={index} />;
+  });
 
-  renderAuctions = () => {
-    return this.state.auctions.map((auction, index) => {
-      return <Auctions auction={auction} key={index} />;
-    });
-  };
-
-  changePrice = () => {
-    const copy = { ...this.state };
-
-    setTimeout(() => {
-      copy.auctions[0].price = 13.5;
-      this.setState(copy);
-    }, 2000);
-  };
   render() {
     return (
       <div className="App">
         <AddAuction addAuction={this.addAuction} />
-        {this.renderAuctions()}
-        {this.changePrice()}
+        {this.renderAuctions}
       </div>
     );
   }
